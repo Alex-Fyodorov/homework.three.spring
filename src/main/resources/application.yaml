@@ -1,4 +1,4 @@
 server:
   port: 8189
   servlet:
-    context-path: /hw3
+    context-path: /hw3/api/v1
