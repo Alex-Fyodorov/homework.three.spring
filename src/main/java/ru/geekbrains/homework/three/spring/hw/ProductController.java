@@ -27,15 +27,27 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public void addNewProduct(@RequestBody String title, @RequestBody Integer price) {
+    public void addNewProduct(@RequestBody Product product) {
         Long id = productRepository.getProdRep().stream().max(new Comparator<Product>() {
             @Override
             public int compare(Product o1, Product o2) {
                 return Long.compare(o1.getId(), o2.getId());
             }
         }).get().getId() + 1;
-        productRepository.addProduct(new Product(id, title, price));
+        product.setId(id);
+        productRepository.addProduct(product);
     }
 
+    @DeleteMapping("/products")
+    public void deleteAll(){
+        productRepository.removeAll();
+    }
 
+    @DeleteMapping("/products/{id}")
+    public void deleteProductById(@PathVariable Long id){
+        Product product = productRepository.getProdRep().
+                stream().filter(p -> p.getId().equals(id)).
+                findFirst().orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.removeProduct(product);
+    }
 }

@@ -2,6 +2,7 @@ package ru.geekbrains.homework.three.spring.hw;
 
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +12,7 @@ public class ProductRepository {
 
     private List<Product> prodRep;
 
+    @PostConstruct
     public void init() {
         this.prodRep = new ArrayList<>(List.of(
                 new Product(1L, "Milk", 89),
